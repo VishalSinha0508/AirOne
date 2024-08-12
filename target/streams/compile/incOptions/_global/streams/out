@@ -1,0 +1,38 @@
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /Users/vishal/IdeaProjects/AirOne/target/scala-2.12/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /Users/vishal/IdeaProjects/AirOne/target/scala-2.12/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Event.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Aircraft.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Cargo$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Crew.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PaxClass$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Segment$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Cargo.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Root$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Leg.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Crew$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ETL.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ETL$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	FlightInfo$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	FlightInfo.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Flight.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Aircraft$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Pax$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SlsValidatedNotificationEvent$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SlsValidatedNotificationEvent.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	CrewClass$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Flight$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PaxClass.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Leg$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Event$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Root.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	CrewClass.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Segment.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Pax.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /Users/vishal/IdeaProjects/AirOne/target/scala-2.12/classes.bak[0m
