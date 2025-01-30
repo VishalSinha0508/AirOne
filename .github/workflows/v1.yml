@@ -1,0 +1,73 @@
+name: "Build and deploy Release"
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Git tag (X.Y.Z)
+        type: string
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.tag }}
+  cancel-in-progress: true
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  REPO: ${{ github.event.repository.full_name }}
+
+jobs:
+  check-input:
+    runs-on: [ self-hosted, linux, weu ]
+    steps:
+      - name: Validate inputs
+        shell: bash
+        run: |
+          if ! [[ ${GITHUB_REF} =~ ^refs/heads/release/[0-9]+\.[0-9]+$ ]]; then
+            echo 'You can only create a release from a "release/${major}.${minor}" branch'
+            exit 1
+          fi
+
+          if ! [[ ${{ inputs.tag }} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo 'The tag needs to be in the form X.Y.Z'
+            exit 1
+          fi
+
+          if ! [[ $(echo ${{ inputs.tag }} | grep -o '^[0-9]\+\.[0-9]\+') == $(echo ${GITHUB_REF} | cut -c 20-) ]]; then
+            echo 'The tag major and minor versions need to match the branch name'
+            exit 1
+          fi
+
+  release:
+    runs-on: [self-hosted, linux, weu]
+    needs: [ check-input ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Build
+        uses: ./.github/actions/build
+      - name: Resolve https://github.com/actions/checkout/issues/1169
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global user.email ${{ github.event.pusher.email }}
+          git config --global user.name ${{ github.event.pusher.name }}
+      - name: Release
+        env:
+          NEXUS_KL_HOST: ${{ secrets.NEXUS_KL_HOST }}
+          NEXUS_KL_USERNAME: ${{ secrets.NEXUS_KL_USERNAME }}
+          NEXUS_KL_PASSWORD: ${{ secrets.NEXUS_KL_PASSWORD }}
+        run: sbt 'release with-defaults release-version ${{ inputs.tag }}'
+
+  copy-jar-to-hdfs:
+    runs-on: [self-hosted, linux, weu]
+    needs: [ release ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Publish
+        uses: ./.github/actions/copy-jar-to-hdfs
+        with:
+          tag: ${{ inputs.tag }}
+          nexus-host: ${{ secrets.NEXUS_KL_HOST }}
+          ansible-tower-token: ${{ secrets.ANSIBLE_TOWER_TOKEN }}
+          job_template_id: ${{ vars.ANSIBLE_TOWER_JOB_TEMPLATE_ID }}
