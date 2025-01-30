@@ -33,33 +33,33 @@ jobs:
             exit 1
           fi
 
-          if ! [[ $(echo ${{ inputs.tag }} | grep -o '^[0-9]\+\.[0-9]\+') == $(echo ${GITHUB_REF} | cut -c 20-) ]]; then
+          if ! [[ $(echo ${{ inputs.tag }} | grep -o '^[0-9]\+\.[0-9]\+') == $(echo ${GITHUB_REF} | cut -c 29-) ]]; then
             echo 'The tag major and minor versions need to match the branch name'
             exit 1
           fi
 
   release:
-    runs-on: [self-hosted, linux, weu]
+    runs-on: [self-hosted, linux, we]
     needs: [ check-input ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Build
         uses: ./.github/actions/build
-      - name: Resolve https://github.com/actions/checkout/issues/1169
+      - name: Resolve https://github.com/actions/checkout/issues/11
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global user.email ${{ github.event.pusher.email }}
           git config --global user.name ${{ github.event.pusher.name }}
       - name: Release
         env:
-          NEXUS_KL_HOST: ${{ secrets.NEXUS_KL_HOST }}
-          NEXUS_KL_USERNAME: ${{ secrets.NEXUS_KL_USERNAME }}
-          NEXUS_KL_PASSWORD: ${{ secrets.NEXUS_KL_PASSWORD }}
-        run: sbt 'release with-defaults release-version ${{ inputs.tag }}'
+          NEXUS_KL_HOST: ${{ secrets.NEXUS }}
+          NEXUS_KL_USERNAME: ${{ secrets.NEXUS_KL_US }}
+          NEXUS_KL_PASSWORD: ${{ secrets.NEXUS_KL_PA }}
+        run: sbt 'release with-default release-version ${{ inputs.tag }}'
 
   copy-jar-to-hdfs:
-    runs-on: [self-hosted, linux, weu]
+    runs-on: [self-hosted, linux, we]
     needs: [ release ]
     steps:
       - name: Checkout repository
@@ -69,5 +69,5 @@ jobs:
         with:
           tag: ${{ inputs.tag }}
           nexus-host: ${{ secrets.NEXUS_KL_HOST }}
-          ansible-tower-token: ${{ secrets.ANSIBLE_TOWER_TOKEN }}
-          job_template_id: ${{ vars.ANSIBLE_TOWER_JOB_TEMPLATE_ID }}
+          ansible-tower-token: ${{ secrets.ANSIBLE_TOWER_TOK }}
+          job_template_id: ${{ vars.ANSIBLE_TOWER_JOB_TEMPLATE_IDdd }}
